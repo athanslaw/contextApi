@@ -10,25 +10,23 @@ import { showToast } from '../../helpers/showToast';
 const CreateUser = ({match, location, history}) => {
     const [userState, dispatch] = useContext(UserContext);
     const handleCreate = (values, {setSubmitting}) => {
+      console.log("Length:", JSON.stringify(userState.users))
+
         const requestBody = {
+            id: (userState.users.length+1),
             name: values.name,
-            username: values.lastname,
+            username: values.username,
             email: values.email,
-            city: values.city
+            address:{"street":"","suite":"","city":values.city,"zipcode":"","geo":{"lat":"","lng":""}},
         };
         dispatch({type: 'CREATE_USER'});
          setSubmitting(true);
-         apiRequest(register, 'post', {...requestBody})
-            .then((res) => {
-                setSubmitting(false);
-                dispatch({type: 'CREATE_USER_SUCCESS', payload: {response: res}});
-                history.push("/users");
-            })
-            .catch((err) => {
-                dispatch({type: 'CREATE_USER_FAILURE', payload: {error: err}});
-                showToast('error', err.response?.data?.statusMessage || 'Something went wrong. Please try again later')
-                setSubmitting(false);
-            });
+
+         userState.users.push(requestBody);
+         dispatch({type: 'CREATE_USER_SUCCESS', payload: {response: userState.users}});
+
+         setSubmitting(false);
+         history.push("/users");
     }
     return (
       <Layout location={location}>

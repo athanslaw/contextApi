@@ -31,12 +31,9 @@ const UserList = (props) => {
 
     const handleDelete = (user) => {
         dispatch({type: 'DELETE_USER'});
-        console.log("Users hre:", currentUser.id)
-
         setShowModal(false);
         let newUserList = props.users.filter(user => user.id !== currentUser.id);
         props.getUsers(newUserList);
-
     }
 
     const triggerDelete = (user) => {

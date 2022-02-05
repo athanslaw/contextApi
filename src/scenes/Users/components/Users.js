@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 
 const Users = ({users, deleteUser}) => {
 
+console.log("Yes", JSON.stringify(users))
     const userList = users && users.map(user => {
       return (
         <div key={user.id} className="custom-table-row w-full flex">
-            <div className="table-row-data w-1/10">{user.id}</div>
-            <div className="table-row-data w-2/10">{user.name}</div>
-            <div className="table-row-data w-1/10">{user.username}</div>
-            <div className="table-row-data w-2/10">{user.email}</div>
-            <div className="table-row-data w-2/10">{user.address.city}</div>
+            <div className="table-row-data w-1/10">{user?.id}</div>
+            <div className="table-row-data w-2/10">{user?.name}</div>
+            <div className="table-row-data w-1/10">{user?.username}</div>
+            <div className="table-row-data w-2/10">{user?.email}</div>
+            <div className="table-row-data w-2/10">{user?.address.city}</div>
             <div className="table-row-data w-1/10">
-              <Link to={{pathname: `/users/${user.id}`, state: {user: user}}}>
-                <button onClick={()=>deleteUser(user)} style={{backgroundColor:'#FAAA00'}} className="py-2 px-5 text-white font-bold rounded-sm focus:outline-none">edit</button>
+              <Link to={{pathname: `/users/${user?.id}`, state: {user: user}}}>
+                <button style={{backgroundColor:'#FAAA00'}} className="py-2 px-5 text-white font-bold rounded-sm focus:outline-none">edit</button>
               </Link>
             </div>
             <div className="table-row-data w-1/10">
