@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const Users = ({users, deleteUser}) => {
 
-console.log("Yes", JSON.stringify(users))
     const userList = users && users.map(user => {
       return (
         <div key={user.id} className="custom-table-row w-full flex">

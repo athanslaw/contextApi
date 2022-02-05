@@ -13,10 +13,8 @@ const Users = ({match, location, history}) => {
 
     const getAllUsers = (newUserList=[]) => {
 
-        console.log("Users:",JSON.stringify(userState.users))
         dispatch({type: 'GET_USERS'});
         if(userState.users.length <1){
-          console.log("entered again")
          apiRequest(users, 'get')
             .then((res) => {
                 dispatch({type: 'GET_USERS_SUCCESS', payload: {response: res}});

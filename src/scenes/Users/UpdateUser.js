@@ -15,19 +15,26 @@ const UpdateUser = ({match, location, history}) => {
 
     const [userState, dispatch] = useContext(UserContext);
     const handleUpdate = (values, {setSubmitting}) => {
-        dispatch({type: 'UPDATE_USER'});
+         dispatch({type: 'UPDATE_USER'});
          setSubmitting(true);
-         apiRequest(users, 'put', {...values})
-            .then((res) => {
-                dispatch({type: 'UPDATE_USER_SUCCESS', payload: {response: res}});
-                setSubmitting(false);
-                history.push("/users");
-            })
-            .catch((err) => {
-                dispatch({type: 'UPDATE_USER_FAILURE', payload: {error: err}});
-                showToast('error', 'Something went wrong. Please try again later')
-                setSubmitting(false);
-            });
+
+
+         let jsonObj = userState.users
+         let index= jsonObj.findIndex(x => x.id === user.id);
+         if (index !== -1) {
+             jsonObj[index]["username"]=values.username
+             jsonObj[index]["name"]=values.name
+             jsonObj[index]["email"]=values.email
+             jsonObj[index]["username"]=values.username
+             jsonObj[index]["address"]={"street":"","suite":"","city":values.city,"zipcode":"","geo":{"lat":"","lng":""}}
+          }
+
+         dispatch({type: 'CREATE_USER_SUCCESS', payload: {response: jsonObj}});
+
+         setSubmitting(false);
+         history.push("/users");
+
+
     }
     return (
       <Layout location={location}>
