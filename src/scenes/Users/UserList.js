@@ -1,8 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
-import Ellipsis from '../../shared/components/Ellipsis';
 import {users, deleteUserById} from '../../lib/url.js';
 import {apiRequest} from '../../lib/api.js';
 import { showToast } from '../../helpers/showToast';
@@ -35,18 +32,11 @@ const UserList = (props) => {
     const handleDelete = (user) => {
         dispatch({type: 'DELETE_USER'});
         console.log("Users hre:", currentUser.id)
-         apiRequest(`${deleteUserById}/${currentUser.id}`, 'delete')
-            .then((res) => {
-                dispatch({type: 'DELETE_USER_SUCCESS', payload: {response: res}});
-                setShowModal(false);
-                // setSubmitting(false);
-                props.getUsers();
-            })
-            .catch((err) => {
-                dispatch({type: 'DELETE_USER_FAILURE', payload: {error: err}});
-                showToast('error', 'Something went wrong. Please try again later')
-                setShowModal(false);
-            });
+
+        setShowModal(false);
+        let newUserList = props.users.filter(user => user.id !== currentUser.id);
+        props.getUsers(newUserList);
+
     }
 
     const triggerDelete = (user) => {

@@ -11,8 +11,11 @@ import { showToast } from '../../helpers/showToast';
 const Users = ({match, location, history}) => {
     const [userState, dispatch] = useContext(UserContext);
 
-    const getAllUsers = () => {
+    const getAllUsers = (newUserList=[]) => {
         dispatch({type: 'GET_USERS'});
+        console.log("Ameh:",JSON.stringify(userState))
+        if(userState.users.length <1){
+          console.log("entered again")
          apiRequest(users, 'get')
             .then((res) => {
                 dispatch({type: 'GET_USERS_SUCCESS', payload: {response: res}});
@@ -22,6 +25,12 @@ const Users = ({match, location, history}) => {
                 err.response.data.status === 401 ? history.replace("/login") :
                 showToast('error', 'Something went wrong. Please try again later')
             });
+          }
+          else{
+            if(newUserList.length > 0){
+              dispatch({type: 'GET_USERS_SUCCESS', payload: {response: newUserList}});
+            }
+          }
     }
 
     useEffect(() => {
